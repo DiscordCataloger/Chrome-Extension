@@ -12,6 +12,21 @@ const searchBar = document.getElementById("searchBar");
 const advancedSearch = document.getElementById("advanced");
 
 advancedSearch.addEventListener("click", function () {
+  const advancedSearchUpArrow = document.createElement("div");
+  advancedSearchUpArrow.setAttribute("id", "up-arrow");
+  const upArrowButton = createElement("button");
+  upArrowButton.classList.add(
+    "my-2",
+    "inline-flex",
+    "items-center",
+    "py-2.5",
+    "px-4",
+    "text-sm",
+    "font-bold",
+    "text-center",
+    "text-slate-50"
+  );
+
   // create a form and attach the first input box into it
 
   const input = document.createElement("div");
