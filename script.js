@@ -10,23 +10,41 @@
 
 const dropButton = document.getElementById("dropdown-button");
 const dropMenu = document.getElementById("dropdown");
+const dropButtonCat = document.getElementById("dropdown-button-cat");
+const dropMenuCat = document.getElementById("dropdown-cat");
+const dropButtonCountry = document.getElementById("dropdown-button-country");
+const dropMenuCountry = document.getElementById("dropdown-country");
+
+// Main Select
 const searchKeywords = document.getElementById("keywords");
 const searchCategories = document.getElementById("categories");
 const searchCountries = document.getElementById("coountries");
+
+// Category
 const searchMedia = document.getElementById("media");
+const searchBusiness = document.getElementById("business");
+const searchEntertain = document.getElementById("entertainment");
+const searchGeneral = document.getElementById("general");
+const searchHealth = document.getElementById("health");
+const searchScience = document.getElementById("science");
+const searchSports = document.getElementById("sports");
+const searchTech = document.getElementById("technology");
 
-dropButton.addEventListener("click", function () {
-  if (dropMenu.style.display === "none" || dropMenu.style.display === "") {
-    dropMenu.style.display = "unset";
-  } else {
-    dropMenu.style.display = "none";
-  }
-});
+// Country
+const searchLocal = document.getElementById("local");
+const searchInter = document.getElementById("international");
+const searchUS = document.getElementById("us");
 
-const selectSearch = (searchItem) => {
+// Search Bar
+const inputField = document.getElementById("search-dropdown");
+const selectFieldCat = document.getElementById("dropdown-button-cat");
+const selectFieldCountry = document.getElementById("dropdown-button-country");
+
+const selectSearch = (searchItem, btn, menu) => {
+  btn.addEventListener("click", function () {});
   searchItem.addEventListener("click", function () {
-    dropButton.innerText = searchItem.innerText;
-    dropMenu.style.display = "none";
+    btn.innerText = searchItem.innerText;
+    menu.classList.add("hidden");
     // Create a new SVG element
     const svgElement = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -52,12 +70,46 @@ const selectSearch = (searchItem) => {
 
     // Append the path element to the SVG element
     svgElement.appendChild(pathElement);
-    dropButton.appendChild(svgElement);
+    btn.appendChild(svgElement);
     // console.log(dropButton);
+
+    // Change search bar
+    switch (btn.innerText) {
+      case "Keywords":
+        inputField.style.display = "flex";
+        selectFieldCat.style.display = "none";
+        selectFieldCountry.style.display = "none";
+        break;
+      case "Categories":
+        inputField.style.display = "none";
+        selectFieldCat.style.display = "flex";
+        selectFieldCountry.style.display = "none";
+        break;
+      case "Countries":
+        inputField.style.display = "none";
+        selectFieldCat.style.display = "none";
+        selectFieldCountry.style.display = "flex";
+        break;
+    }
   });
 };
 
-selectSearch(searchKeywords);
-selectSearch(searchCategories);
-selectSearch(searchCountries);
-selectSearch(searchMedia);
+// Main Select
+selectSearch(searchKeywords, dropButton, dropMenu);
+selectSearch(searchCategories, dropButton, dropMenu);
+selectSearch(searchCountries, dropButton, dropMenu);
+selectSearch(searchMedia, dropButton, dropMenu);
+
+// Category Select
+selectSearch(searchBusiness, dropButtonCat, dropMenuCat);
+selectSearch(searchEntertain, dropButtonCat, dropMenuCat);
+selectSearch(searchGeneral, dropButtonCat, dropMenuCat);
+selectSearch(searchHealth, dropButtonCat, dropMenuCat);
+selectSearch(searchScience, dropButtonCat, dropMenuCat);
+selectSearch(searchSports, dropButtonCat, dropMenuCat);
+selectSearch(searchTech, dropButtonCat, dropMenuCat);
+
+// Country Select
+selectSearch(searchLocal, dropButtonCountry, dropMenuCountry);
+selectSearch(searchInter, dropButtonCountry, dropMenuCountry);
+selectSearch(searchUS, dropButtonCountry, dropMenuCountry);
