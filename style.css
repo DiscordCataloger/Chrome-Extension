@@ -6,9 +6,6 @@
   display: none;
 }
 
-#search-dropdown {
-}
-
 @keyframes dropMenu {
   0% {
     top: -10px;
