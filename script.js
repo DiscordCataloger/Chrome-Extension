@@ -1,12 +1,23 @@
-async function fetchNewsApi(apiKey, q, country, source) {
-  const response = await fetch(
-    `https://newsapi.org/v2/top-headlines?q=${q}&country=${country}&sources=${source}&apiKey=${apiKey}`
+const { parse } = require("rss-to-json");
+// async await
+async function fetchNewsApi(q, country, language, category) {
+  const rss = await parse(
+    `https://news.google.com/news/rss/headlines/section/topic/${category}?q=${q}&hl=${language}&gl=${country}`
   );
-  const data = await response.json();
-  console.log(data);
-}
 
-fetchNewsApi("7a9c622267b2438ebcb0890ceeada316");
+  console.log(JSON.parse(JSON.stringify(rss)));
+}
+fetchNewsApi("apple");
+
+// async function fetchNewsApi(apiKey, q, country, source) {
+//   const response = await fetch(
+//     `https://newsapi.org/v2/top-headlines?q=${q}&country=${country}&sources=${source}&apiKey=${apiKey}`
+//   );
+//   const data = await response.json();
+//   console.log(data);
+// }
+
+// fetchNewsApi("7a9c622267b2438ebcb0890ceeada316");
 
 // const searchBar = document.getElementById("searchBar");
 // const advancedSearch = document.getElementById("advanced");
