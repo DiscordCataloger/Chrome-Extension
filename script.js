@@ -5,6 +5,18 @@ const dropMenuCat = document.getElementById("dropdown-cat");
 const dropButtonCountry = document.getElementById("dropdown-button-country");
 const dropMenuCountry = document.getElementById("dropdown-country");
 
+// Form
+const form = document.getElementById("form");
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  fetch(form.action, {
+    method: "GET",
+    body: new FormData(form),
+  });
+});
+
 // Main Select
 const searchKeywords = document.getElementById("keywords");
 const searchCategories = document.getElementById("categories");
@@ -77,6 +89,9 @@ const selectSearch = (searchItem, btn, menu) => {
       case "Categories":
         inputField.style.display = "none";
         selectFieldCat.style.display = "flex";
+        submitBtn.classList.add("hidden");
+        selectFieldCat.classList.add("w-[386.75px]", "rounded-r-lg");
+
         selectFieldCountry.style.display = "none";
         break;
     }
@@ -200,6 +215,17 @@ const main = async (api, keyword, category) => {
 };
 
 const submitBtn = document.getElementById("submitBtn");
+
+inputField.addEventListener("keyup", function (event) {
+  if (event.key === "Enter") {
+    // Get the entered keyword
+    const keyword = inputField.value;
+
+    // Perform the search operation using the keyword
+    event.preventDefault();
+    submitBtn.click();
+  }
+});
 
 submitBtn.addEventListener("click", function () {
   document.getElementById("newsItems").innerHTML = "";
