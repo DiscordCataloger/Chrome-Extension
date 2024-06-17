@@ -8,7 +8,7 @@ const dropMenuCountry = document.getElementById("dropdown-country");
 // Main Select
 const searchKeywords = document.getElementById("keywords");
 const searchCategories = document.getElementById("categories");
-const searchCountries = document.getElementById("coountries");
+const topStories = document.getElementById("top-stories");
 
 // Category
 const searchMedia = document.getElementById("media");
@@ -31,7 +31,6 @@ const selectFieldCat = document.getElementById("dropdown-button-cat");
 const selectFieldCountry = document.getElementById("dropdown-button-country");
 
 const selectSearch = (searchItem, btn, menu) => {
-  btn.addEventListener("click", function () {});
   searchItem.addEventListener("click", function () {
     btn.innerText = searchItem.innerText;
     menu.classList.add("hidden");
@@ -65,6 +64,11 @@ const selectSearch = (searchItem, btn, menu) => {
 
     // Change search bar
     switch (btn.innerText) {
+      case "Top Stories":
+        inputField.style.display = "flex";
+        selectFieldCat.style.display = "none";
+        selectFieldCountry.style.display = "none";
+        break;
       case "Keywords":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
@@ -75,20 +79,16 @@ const selectSearch = (searchItem, btn, menu) => {
         selectFieldCat.style.display = "flex";
         selectFieldCountry.style.display = "none";
         break;
-      case "Countries":
-        inputField.style.display = "none";
-        selectFieldCat.style.display = "none";
-        selectFieldCountry.style.display = "flex";
-        break;
     }
   });
 };
 
 // Main Select
+selectSearch(topStories, dropButton, dropMenu);
 selectSearch(searchKeywords, dropButton, dropMenu);
 selectSearch(searchCategories, dropButton, dropMenu);
-selectSearch(searchCountries, dropButton, dropMenu);
-selectSearch(searchMedia, dropButton, dropMenu);
+// selectSearch(searchCountries, dropButton, dropMenu);
+// selectSearch(searchMedia, dropButton, dropMenu);
 
 // Category Select
 selectSearch(searchBusiness, dropButtonCat, dropMenuCat);
@@ -99,10 +99,10 @@ selectSearch(searchScience, dropButtonCat, dropMenuCat);
 selectSearch(searchSports, dropButtonCat, dropMenuCat);
 selectSearch(searchTech, dropButtonCat, dropMenuCat);
 
-// Country Select
-selectSearch(searchLocal, dropButtonCountry, dropMenuCountry);
-selectSearch(searchInter, dropButtonCountry, dropMenuCountry);
-selectSearch(searchUS, dropButtonCountry, dropMenuCountry);
+// // Country Select
+// selectSearch(searchLocal, dropButtonCountry, dropMenuCountry);
+// selectSearch(searchInter, dropButtonCountry, dropMenuCountry);
+// selectSearch(searchUS, dropButtonCountry, dropMenuCountry);
 
 // create news card
 function createNewsCard(url, imgSrc, newsTitle, description, date) {
@@ -212,6 +212,54 @@ submitBtn.addEventListener("click", function () {
     dropButtonCat.innerText.trim()
   );
   // main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", "tennis", "Sports");
+});
+
+// main page
+const mainPage = async (api, category) => {
+  // Show the loading image
+  loading();
+
+  const mainRes = await fetch(
+    `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${api}`
+  );
+  const mainData = await mainRes.json();
+
+  // Remove the loading image after a 0.6-second delay
+  setTimeout(() => {
+    document.getElementById("newsItems").innerHTML = "";
+
+    for (let i = 0; i < 11; i++) {
+      try {
+        createNewsCard(
+          mainData.results[i].url,
+          mainData.results[i].multimedia[0].url,
+          mainData.results[i].title,
+          mainData.results[i].abstract,
+          mainData.results[i].published_date.substring(0, 10)
+        );
+      } catch (error) {
+        createNewsCard(
+          mainData.results[i].url,
+          "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
+          mainData.results[i].title,
+          mainData.results[i].abstract,
+          mainData.results[i].published_date.substring(0, 10)
+        );
+      }
+    }
+  }, 600);
+};
+
+// Show top stories on the front page
+mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
+
+// Event Listener for returning to Top Stories
+topStories.addEventListener("click", function () {
+  loading();
+  // Call the mainPage function to fetch and display the top stories
+  setTimeout(function () {
+    mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
+  }, 100);
 });
 
 // // Assuming the RSS feed URL is stored in a variable called 'rssUrl'
