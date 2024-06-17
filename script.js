@@ -214,6 +214,42 @@ submitBtn.addEventListener("click", function () {
   // main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", "tennis", "Sports");
 });
 
+// Toggle Dark / Light mode
+let toggleNumber = 0;
+modeBtn.addEventListener("click", function () {
+  toggleNumber++;
+  let toggle = toggleNumber % 2;
+  const backdropToggle = document.getElementById("backdropBackground");
+  const searchLabelToggle = document.getElementById("searchLabel");
+  const dropdownBtnToggle = document.getElementById("dropdown-button");
+  const dropdownToggle = document.getElementById("dropdown");
+  const ulToggle = document.getElementById("selectUl");
+
+  if ((toggle === 1)) {
+    backdropToggle.classList.remove("backdrop-brightness-120");
+    backdropToggle.classList.add("backdrop-brightness-50");
+    searchLabelToggle.classList.remove("text-gray-900");
+    searchLabelToggle.classList.add("text-white");
+    dropdownBtnToggle.className =
+      "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-white bg-gray-700 border border-gray-600 rounded-s-lg hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-700";
+    dropdownToggle.classList.remove("bg-white");
+    dropdownToggle.classList.add("bg-gray-700");
+    ulToggle.classList.remove("text-gray-700");
+    ulToggle.classList.add("text-gray-200");
+  } else {
+    backdropToggle.classList.remove("backdrop-brightness-50");
+    backdropToggle.classList.add("backdrop-brightness-120");
+    searchLabelToggle.classList.remove("text-white");
+    searchLabelToggle.classList.add("text-gray-900");
+    dropdownBtnToggle.className =
+      "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100";
+    dropdownToggle.classList.remove("bg-gray-700");
+    dropdownToggle.classList.add("bg-white");
+    ulToggle.classList.remove("text-gray-200");
+    ulToggle.classList.add("text-gray-700");
+  }
+});
+
 // // Assuming the RSS feed URL is stored in a variable called 'rssUrl'
 // fetch("https://www.yahoo.com/news/rss")
 //   .then((response) => response.text())
