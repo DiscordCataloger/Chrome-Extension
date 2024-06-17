@@ -80,18 +80,19 @@ const selectSearch = (searchItem, btn, menu) => {
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
         selectFieldCountry.style.display = "none";
+        submitBtn.classList.remove("hidden");
         break;
       case "Keywords":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
         selectFieldCountry.style.display = "none";
+        submitBtn.classList.remove("hidden");
         break;
       case "Categories":
         inputField.style.display = "none";
         selectFieldCat.style.display = "flex";
         submitBtn.classList.add("hidden");
         selectFieldCat.classList.add("w-[386.75px]", "rounded-r-lg");
-
         selectFieldCountry.style.display = "none";
         break;
     }
