@@ -85,13 +85,13 @@ const selectSearch = (searchItem, btn, menu) => {
       case "Top Stories":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
-        selectFieldCountry.style.display = "none";
+        // selectFieldCountry.style.display = "none";
         submitBtn.classList.remove("hidden");
         break;
       case "Keywords":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
-        selectFieldCountry.style.display = "none";
+        // selectFieldCountry.style.display = "none";
         submitBtn.classList.remove("hidden");
         break;
       case "Categories":
@@ -99,7 +99,7 @@ const selectSearch = (searchItem, btn, menu) => {
         selectFieldCat.style.display = "flex";
         submitBtn.classList.add("hidden");
         selectFieldCat.classList.add("w-[386.75px]", "rounded-r-lg");
-        selectFieldCountry.style.display = "none";
+        // selectFieldCountry.style.display = "none";
         break;
     }
   });
@@ -331,6 +331,173 @@ topStories.addEventListener("click", function () {
     mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
   }, 100);
 });
+
+// Toggle Dark / Light mode
+const backdropToggle = document.getElementById("backdropBackground"); //"min-h-[600px] backdrop-brightness-120 dark:backdrop-brightness-50 overflow-auto"
+const searchLabelToggle = document.getElementById("searchLabel"); //"mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+const dropdownBtnToggle = document.getElementById("dropdown-button");
+const dropdownToggle = document.getElementById("dropdown");
+const ulToggle = document.getElementById("selectUl"); // "py-2 text-sm text-gray-700 dark:text-gray-200"
+const topToggle = document.getElementById("top-stories");
+const keywordToggle = document.getElementById("keywords");
+const catToggle = document.getElementById("categories");
+const searchDropDownToggle = document.getElementById("search-dropdown");
+const catDropDownBtnToggle = document.getElementById("dropdown-button-cat");
+const catDropDownToggle = document.getElementById("dropdown-cat");
+const catUlToggle = document.getElementById("catUl");
+const businessToggle = document.getElementById("business");
+const politicsToggle = document.getElementById("politics");
+const sportsToggle = document.getElementById("sports");
+const scienceToggle = document.getElementById("science");
+const technologyToggle = document.getElementById("technology");
+const fashionToggle = document.getElementById("fashion");
+const foodToggle = document.getElementById("food");
+const healthToggle = document.getElementById("health");
+const usToggle = document.getElementById("us");
+const worldToggle = document.getElementById("world");
+const submitBtnToggle = document.getElementById("submitBtn");
+const cardToggleA = document.getElementById("");
+const cardToggleH5 = document.getElementById("");
+const cardToggle = document.getElementById("");
+
+let darkModeBtn = document.getElementById("darkModeBtn");
+let lightModeBtn = document.getElementById("lightModeBtn");
+
+darkModeBtn.addEventListener("click", function () {
+  darkModeBtn.classList.add("hidden");
+  lightModeBtn.classList.remove("hidden");
+  backdropToggle.classList.remove("backdrop-brightness-120");
+  backdropToggle.classList.add("backdrop-brightness-50");
+  searchLabelToggle.classList.remove("text-gray-900");
+  searchLabelToggle.classList.add("text-white");
+  dropdownBtnToggle.className =
+    "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-white bg-gray-700 border border-gray-600 rounded-s-lg hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-700";
+  dropdownToggle.classList.remove("bg-white");
+  dropdownToggle.classList.add("bg-gray-700");
+  ulToggle.classList.remove("text-gray-700");
+  ulToggle.classList.add("text-gray-200");
+  topToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  keywordToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  catToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  searchDropDownToggle.className =
+    "block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-700 rounded-e-lg border-s-gray-700 border-s-2 border border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400";
+  catDropDownBtnToggle.className =
+    "flex-shrink-0 inline-flex items-center justify-between block p-2.5 w-[90.5%] z-20 text-sm text-white bg-gray-700 border-s-gray-700 border-s-2 border border-gray-600 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400";
+  catDropDownToggle.className =
+    "z-10 hidden bg-gray-700 divide-y divide-gray-100 rounded-lg shadow w-full";
+  catUlToggle.className = "py-2 text-sm text-gray-200";
+  businessToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  politicsToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  sportsToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  scienceToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  technologyToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  fashionToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  foodToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  healthToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  usToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  worldToggle.className =
+    "inline-flex w-full px-4 py-2 hover:bg-gray-600 hover:text-white";
+  submitBtnToggle.className =
+    "absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-600 rounded-e-lg border border-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800";
+
+  let cardA = document.querySelectorAll("a");
+  cardA.forEach(
+    (a) =>
+      (a.className =
+        "flex flex-row items-center mx-auto m-8 bg-gray-700 border border-gray-700 rounded-lg shadow max-w-lg hover:bg-gray-600")
+  );
+
+  let cardH5 = document.querySelectorAll("h5");
+  cardH5.forEach(
+    (h5) =>
+      (h5.className =
+        "overflow-hidden h-[50%] mb-1 text-lg font-bold tracking-tight text-gray-200")
+  );
+
+  let cardP = document.querySelectorAll("p");
+  cardP.forEach(
+    (p) => (p.className = "overflow-hidden h-[50%] font-normal text-gray-400")
+  );
+
+  let cardSpan = document.querySelector("span.text-right");
+  cardSpan.forEach(
+    (span) => (span.className = "text-right font-mono text-gray-500")
+  );
+});
+
+lightModeBtn.addEventListener("click", function () {
+  lightModeBtn.classList.add("hidden");
+  darkModeBtn.classList.remove("hidden");
+  backdropToggle.classList.remove("backdrop-brightness-50");
+  backdropToggle.classList.add("backdrop-brightness-120");
+  searchLabelToggle.classList.remove("text-white");
+  searchLabelToggle.classList.add("text-gray-900");
+  dropdownBtnToggle.className =
+    "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100";
+  dropdownToggle.classList.remove("bg-gray-700");
+  dropdownToggle.classList.add("bg-white");
+  ulToggle.classList.remove("text-gray-200");
+  ulToggle.classList.add("text-gray-700");
+  topToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  keywordToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  catToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  searchDropDownToggle.className =
+    "block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500";
+  catDropDownBtnToggle.className =
+    "flex-shrink-0 inline-flex items-center justify-between block p-2.5 w-[90.5%] z-20 text-sm text-gray-900 bg-gray-50 border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500";
+  catDropDownToggle.className =
+    "z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-full";
+  catUlToggle.className = "py-2 text-sm text-gray-700";
+  businessToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  politicsToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  sportsToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  scienceToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  technologyToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  fashionToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  foodToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  healthToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  usToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  worldToggle.className = "inline-flex w-full px-4 py-2 hover:bg-gray-100";
+  submitBtnToggle.className =
+    "absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300";
+
+  let cardA = document.querySelectorAll("a");
+  cardA.forEach(
+    (a) =>
+      (a.className =
+        "flex flex-row items-center mx-auto m-8 bg-white border border-gray-200 rounded-lg shadow max-w-lg hover:bg-gray-100")
+  );
+
+  let cardH5 = document.querySelectorAll("h5");
+  cardH5.forEach(
+    (h5) =>
+      (h5.className =
+        "overflow-hidden h-[50%] mb-1 text-lg font-bold tracking-tight text-gray-900")
+  );
+
+  let cardP = document.querySelectorAll("p");
+  cardP.forEach(
+    (p) => (p.className = "overflow-hidden h-[50%] font-normal text-gray-700")
+  );
+
+  let cardSpan = document.querySelector("span.text-right");
+  cardSpan.forEach(
+    (span) => (span.className = "text-right font-mono text-gray-400")
+  );
+});
+
 
 // // Assuming the RSS feed URL is stored in a variable called 'rssUrl'
 // fetch("https://www.yahoo.com/news/rss")
