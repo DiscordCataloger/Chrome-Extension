@@ -2,8 +2,8 @@ const dropButton = document.getElementById("dropdown-button");
 const dropMenu = document.getElementById("dropdown");
 const dropButtonCat = document.getElementById("dropdown-button-cat");
 const dropMenuCat = document.getElementById("dropdown-cat");
-const dropButtonCountry = document.getElementById("dropdown-button-country");
-const dropMenuCountry = document.getElementById("dropdown-country");
+// const dropButtonCountry = document.getElementById("dropdown-button-country");
+// const dropMenuCountry = document.getElementById("dropdown-country");
 
 // Main Select
 const searchKeywords = document.getElementById("keywords");
@@ -11,24 +11,30 @@ const searchCategories = document.getElementById("categories");
 const topStories = document.getElementById("top-stories");
 
 // Category
-const searchMedia = document.getElementById("media");
+// const searchMedia = document.getElementById("media");
 const searchBusiness = document.getElementById("business");
-const searchEntertain = document.getElementById("entertainment");
-const searchGeneral = document.getElementById("general");
+// const searchEntertain = document.getElementById("entertainment");
+// const searchGeneral = document.getElementById("general");
 const searchHealth = document.getElementById("health");
 const searchScience = document.getElementById("science");
 const searchSports = document.getElementById("sports");
 const searchTech = document.getElementById("technology");
 
-// Country
-const searchLocal = document.getElementById("local");
-const searchInter = document.getElementById("international");
+const searchPotlitics = document.getElementById("politics");
+const searchFashion = document.getElementById("fashion");
+const searchFood = document.getElementById("food");
 const searchUS = document.getElementById("us");
+const searchWorld = document.getElementById("world");
+
+// Country
+// const searchLocal = document.getElementById("local");
+// const searchInter = document.getElementById("international");
+// const searchUS = document.getElementById("us");
 
 // Search Bar
 const inputField = document.getElementById("search-dropdown");
 const selectFieldCat = document.getElementById("dropdown-button-cat");
-const selectFieldCountry = document.getElementById("dropdown-button-country");
+// const selectFieldCountry = document.getElementById("dropdown-button-country");
 
 const selectSearch = (searchItem, btn, menu) => {
   searchItem.addEventListener("click", function () {
@@ -92,12 +98,17 @@ selectSearch(searchCategories, dropButton, dropMenu);
 
 // Category Select
 selectSearch(searchBusiness, dropButtonCat, dropMenuCat);
-selectSearch(searchEntertain, dropButtonCat, dropMenuCat);
-selectSearch(searchGeneral, dropButtonCat, dropMenuCat);
+// selectSearch(searchEntertain, dropButtonCat, dropMenuCat);
+// selectSearch(searchGeneral, dropButtonCat, dropMenuCat);
 selectSearch(searchHealth, dropButtonCat, dropMenuCat);
 selectSearch(searchScience, dropButtonCat, dropMenuCat);
 selectSearch(searchSports, dropButtonCat, dropMenuCat);
 selectSearch(searchTech, dropButtonCat, dropMenuCat);
+selectSearch(searchPotlitics, dropButtonCat, dropMenuCat);
+selectSearch(searchFashion, dropButtonCat, dropMenuCat);
+selectSearch(searchFood, dropButtonCat, dropMenuCat);
+selectSearch(searchUS, dropButtonCat, dropMenuCat);
+selectSearch(searchWorld, dropButtonCat, dropMenuCat);
 
 // // Country Select
 // selectSearch(searchLocal, dropButtonCountry, dropMenuCountry);
@@ -167,36 +178,68 @@ const main = async (api, keyword, category) => {
   // Show the loading image
   loading();
 
-  const res = await fetch(
-    `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}&fq=news_desk:("${category}")&api-key=${api}`
-  );
-  const data = await res.json();
-  console.log(data.response.docs);
+  if (keyword !== "") {
+    const res = await fetch(
+      `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}&api-key=${api}`
+      // `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${keyword}&fq=news_desk:("${category}")&sort=newest&api-key=${api}`
+    );
+    const data = await res.json();
+    console.log(data.response.docs);
+    // Remove the loading image after a 2-second delay
+    setTimeout(() => {
+      document.getElementById("newsItems").innerHTML = "";
 
-  // Remove the loading image after a 2-second delay
-  setTimeout(() => {
-    document.getElementById("newsItems").innerHTML = "";
-
-    for (let i = 0; i < 7; i++) {
-      try {
-        createNewsCard(
-          data.response.docs[i].web_url,
-          `https://static01.nyt.com/${data.response.docs[i].multimedia[0].url}`,
-          data.response.docs[i].headline.main,
-          data.response.docs[i].abstract,
-          data.response.docs[i].pub_date.substring(0, 10)
-        );
-      } catch (error) {
-        createNewsCard(
-          data.response.docs[i].web_url,
-          "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
-          data.response.docs[i].headline.main,
-          data.response.docs[i].abstract,
-          data.response.docs[i].pub_date.substring(0, 10)
-        );
+      for (let i = 0; i < 11; i++) {
+        try {
+          createNewsCard(
+            data.response.docs[i].web_url,
+            `https://static01.nyt.com/${data.response.docs[i].multimedia[0].url}`,
+            data.response.docs[i].headline.main,
+            data.response.docs[i].abstract,
+            data.response.docs[i].pub_date.substring(0, 10)
+          );
+        } catch (error) {
+          createNewsCard(
+            data.response.docs[i].web_url,
+            "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
+            data.response.docs[i].headline.main,
+            data.response.docs[i].abstract,
+            data.response.docs[i].pub_date.substring(0, 10)
+          );
+        }
       }
-    }
-  }, 600);
+    }, 600);
+  } else {
+    const res = await fetch(
+      `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${api}`
+    );
+    const data = await res.json();
+    console.log(data.results);
+    // Remove the loading image after a 2-second delay
+    setTimeout(() => {
+      document.getElementById("newsItems").innerHTML = "";
+
+      for (let i = 2; i < 13; i++) {
+        try {
+          createNewsCard(
+            data.results[i].url,
+            data.results[i].multimedia[0].url,
+            data.results[i].title,
+            data.results[i].abstract,
+            data.results[i].published_date.substring(0, 10)
+          );
+        } catch (error) {
+          createNewsCard(
+            data.results[i].url,
+            "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
+            data.results[i].title,
+            data.results[i].abstract,
+            data.results[i].published_date.substring(0, 10)
+          );
+        }
+      }
+    }, 600);
+  }
 };
 
 const submitBtn = document.getElementById("submitBtn");
@@ -218,60 +261,6 @@ submitBtn.addEventListener("click", function () {
 const mainPage = async (api, category) => {
   // Show the loading image
   loading();
-
-  const mainRes = await fetch(
-    `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${api}`
-  );
-  const mainData = await mainRes.json();
-
-  // Remove the loading image after a 0.6-second delay
-  setTimeout(() => {
-    document.getElementById("newsItems").innerHTML = "";
-
-    for (let i = 0; i < 11; i++) {
-      try {
-        createNewsCard(
-          mainData.results[i].url,
-          mainData.results[i].multimedia[0].url,
-          mainData.results[i].title,
-          mainData.results[i].abstract,
-          mainData.results[i].published_date.substring(0, 10)
-        );
-      } catch (error) {
-        createNewsCard(
-          mainData.results[i].url,
-          "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
-          mainData.results[i].title,
-          mainData.results[i].abstract,
-          mainData.results[i].published_date.substring(0, 10)
-        );
-      }
-    }
-  }, 600);
-};
-
-// Show top stories on the front page
-mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
-
-// Event Listener for returning to Top Stories
-topStories.addEventListener("click", function () {
-  loading();
-  // Call the mainPage function to fetch and display the top stories
-  setTimeout(function () {
-    mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
-  }, 100);
-});
-
-// Toggle Dark / Light mode
-let toggleNumber = 0;
-modeBtn.addEventListener("click", function () {
-  toggleNumber++;
-  let toggle = toggleNumber % 2;
-  const backdropToggle = document.getElementById("backdropBackground");
-  const searchLabelToggle = document.getElementById("searchLabel");
-  const dropdownBtnToggle = document.getElementById("dropdown-button");
-  const dropdownToggle = document.getElementById("dropdown");
-  const ulToggle = document.getElementById("selectUl");
 
   const mainRes = await fetch(
     `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${api}`
