@@ -262,6 +262,60 @@ topStories.addEventListener("click", function () {
   }, 100);
 });
 
+// Toggle Dark / Light mode
+let toggleNumber = 0;
+modeBtn.addEventListener("click", function () {
+  toggleNumber++;
+  let toggle = toggleNumber % 2;
+  const backdropToggle = document.getElementById("backdropBackground");
+  const searchLabelToggle = document.getElementById("searchLabel");
+  const dropdownBtnToggle = document.getElementById("dropdown-button");
+  const dropdownToggle = document.getElementById("dropdown");
+  const ulToggle = document.getElementById("selectUl");
+
+  const mainRes = await fetch(
+    `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${api}`
+  );
+  const mainData = await mainRes.json();
+
+  // Remove the loading image after a 0.6-second delay
+  setTimeout(() => {
+    document.getElementById("newsItems").innerHTML = "";
+
+    for (let i = 0; i < 11; i++) {
+      try {
+        createNewsCard(
+          mainData.results[i].url,
+          mainData.results[i].multimedia[0].url,
+          mainData.results[i].title,
+          mainData.results[i].abstract,
+          mainData.results[i].published_date.substring(0, 10)
+        );
+      } catch (error) {
+        createNewsCard(
+          mainData.results[i].url,
+          "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
+          mainData.results[i].title,
+          mainData.results[i].abstract,
+          mainData.results[i].published_date.substring(0, 10)
+        );
+      }
+    }
+  }, 600);
+};
+
+// Show top stories on the front page
+mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
+
+// Event Listener for returning to Top Stories
+topStories.addEventListener("click", function () {
+  loading();
+  // Call the mainPage function to fetch and display the top stories
+  setTimeout(function () {
+    mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
+  }, 100);
+});
+
 // // Assuming the RSS feed URL is stored in a variable called 'rssUrl'
 // fetch("https://www.yahoo.com/news/rss")
 //   .then((response) => response.text())
