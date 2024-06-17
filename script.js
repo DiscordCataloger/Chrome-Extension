@@ -8,7 +8,7 @@ const dropMenuCountry = document.getElementById("dropdown-country");
 // Main Select
 const searchKeywords = document.getElementById("keywords");
 const searchCategories = document.getElementById("categories");
-const searchCountries = document.getElementById("coountries");
+const topStories = document.getElementById("top-stories");
 
 // Category
 const searchMedia = document.getElementById("media");
@@ -31,7 +31,6 @@ const selectFieldCat = document.getElementById("dropdown-button-cat");
 const selectFieldCountry = document.getElementById("dropdown-button-country");
 
 const selectSearch = (searchItem, btn, menu) => {
-  btn.addEventListener("click", function () {});
   searchItem.addEventListener("click", function () {
     btn.innerText = searchItem.innerText;
     menu.classList.add("hidden");
@@ -65,6 +64,11 @@ const selectSearch = (searchItem, btn, menu) => {
 
     // Change search bar
     switch (btn.innerText) {
+      case "Top Stories":
+        inputField.style.display = "flex";
+        selectFieldCat.style.display = "none";
+        selectFieldCountry.style.display = "none";
+        break;
       case "Keywords":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
@@ -75,20 +79,16 @@ const selectSearch = (searchItem, btn, menu) => {
         selectFieldCat.style.display = "flex";
         selectFieldCountry.style.display = "none";
         break;
-      case "Countries":
-        inputField.style.display = "none";
-        selectFieldCat.style.display = "none";
-        selectFieldCountry.style.display = "flex";
-        break;
     }
   });
 };
 
 // Main Select
+selectSearch(topStories, dropButton, dropMenu);
 selectSearch(searchKeywords, dropButton, dropMenu);
 selectSearch(searchCategories, dropButton, dropMenu);
-selectSearch(searchCountries, dropButton, dropMenu);
-selectSearch(searchMedia, dropButton, dropMenu);
+// selectSearch(searchCountries, dropButton, dropMenu);
+// selectSearch(searchMedia, dropButton, dropMenu);
 
 // Category Select
 selectSearch(searchBusiness, dropButtonCat, dropMenuCat);
@@ -99,10 +99,10 @@ selectSearch(searchScience, dropButtonCat, dropMenuCat);
 selectSearch(searchSports, dropButtonCat, dropMenuCat);
 selectSearch(searchTech, dropButtonCat, dropMenuCat);
 
-// Country Select
-selectSearch(searchLocal, dropButtonCountry, dropMenuCountry);
-selectSearch(searchInter, dropButtonCountry, dropMenuCountry);
-selectSearch(searchUS, dropButtonCountry, dropMenuCountry);
+// // Country Select
+// selectSearch(searchLocal, dropButtonCountry, dropMenuCountry);
+// selectSearch(searchInter, dropButtonCountry, dropMenuCountry);
+// selectSearch(searchUS, dropButtonCountry, dropMenuCountry);
 
 // create news card
 function createNewsCard(url, imgSrc, newsTitle, description, date) {
@@ -214,40 +214,52 @@ submitBtn.addEventListener("click", function () {
   // main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", "tennis", "Sports");
 });
 
-// Toggle Dark / Light mode
-let toggleNumber = 0;
-modeBtn.addEventListener("click", function () {
-  toggleNumber++;
-  let toggle = toggleNumber % 2;
-  const backdropToggle = document.getElementById("backdropBackground");
-  const searchLabelToggle = document.getElementById("searchLabel");
-  const dropdownBtnToggle = document.getElementById("dropdown-button");
-  const dropdownToggle = document.getElementById("dropdown");
-  const ulToggle = document.getElementById("selectUl");
+// main page
+const mainPage = async (api, category) => {
+  // Show the loading image
+  loading();
 
-  if ((toggle === 1)) {
-    backdropToggle.classList.remove("backdrop-brightness-120");
-    backdropToggle.classList.add("backdrop-brightness-50");
-    searchLabelToggle.classList.remove("text-gray-900");
-    searchLabelToggle.classList.add("text-white");
-    dropdownBtnToggle.className =
-      "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-white bg-gray-700 border border-gray-600 rounded-s-lg hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-700";
-    dropdownToggle.classList.remove("bg-white");
-    dropdownToggle.classList.add("bg-gray-700");
-    ulToggle.classList.remove("text-gray-700");
-    ulToggle.classList.add("text-gray-200");
-  } else {
-    backdropToggle.classList.remove("backdrop-brightness-50");
-    backdropToggle.classList.add("backdrop-brightness-120");
-    searchLabelToggle.classList.remove("text-white");
-    searchLabelToggle.classList.add("text-gray-900");
-    dropdownBtnToggle.className =
-      "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100";
-    dropdownToggle.classList.remove("bg-gray-700");
-    dropdownToggle.classList.add("bg-white");
-    ulToggle.classList.remove("text-gray-200");
-    ulToggle.classList.add("text-gray-700");
-  }
+  const mainRes = await fetch(
+    `https://api.nytimes.com/svc/topstories/v2/${category}.json?api-key=${api}`
+  );
+  const mainData = await mainRes.json();
+
+  // Remove the loading image after a 0.6-second delay
+  setTimeout(() => {
+    document.getElementById("newsItems").innerHTML = "";
+
+    for (let i = 0; i < 11; i++) {
+      try {
+        createNewsCard(
+          mainData.results[i].url,
+          mainData.results[i].multimedia[0].url,
+          mainData.results[i].title,
+          mainData.results[i].abstract,
+          mainData.results[i].published_date.substring(0, 10)
+        );
+      } catch (error) {
+        createNewsCard(
+          mainData.results[i].url,
+          "https://s.france24.com/media/display/e6279b3c-db08-11ee-b7f5-005056bf30b7/w:1280/p:16x9/news_en_1920x1080.jpg",
+          mainData.results[i].title,
+          mainData.results[i].abstract,
+          mainData.results[i].published_date.substring(0, 10)
+        );
+      }
+    }
+  }, 600);
+};
+
+// Show top stories on the front page
+mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
+
+// Event Listener for returning to Top Stories
+topStories.addEventListener("click", function () {
+  loading();
+  // Call the mainPage function to fetch and display the top stories
+  setTimeout(function () {
+    mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
+  }, 100);
 });
 
 // // Assuming the RSS feed URL is stored in a variable called 'rssUrl'
