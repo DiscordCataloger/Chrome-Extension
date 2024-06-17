@@ -2,6 +2,7 @@ const dropButton = document.getElementById("dropdown-button");
 const dropMenu = document.getElementById("dropdown");
 const dropButtonCat = document.getElementById("dropdown-button-cat");
 const dropMenuCat = document.getElementById("dropdown-cat");
+const catUl = document.getElementById("catUl");
 // const dropButtonCountry = document.getElementById("dropdown-button-country");
 // const dropMenuCountry = document.getElementById("dropdown-country");
 
@@ -85,21 +86,27 @@ const selectSearch = (searchItem, btn, menu) => {
       case "Top Stories":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
-        selectFieldCountry.style.display = "none";
-        submitBtn.classList.remove("hidden");
+        // selectFieldCountry.style.display = "none";
+        if (submitBtn.classList.contains("hidden")) {
+          inputField.classList.add("w-[349.4167.px]");
+          submitBtn.classList.remove("hidden");
+        }
         break;
       case "Keywords":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
-        selectFieldCountry.style.display = "none";
-        submitBtn.classList.remove("hidden");
+        // selectFieldCountry.style.display = "none";
+        if (submitBtn.classList.contains("hidden")) {
+          inputField.classList.add("w-[349.4167.px]");
+          submitBtn.classList.remove("hidden");
+        }
         break;
       case "Categories":
         inputField.style.display = "none";
         selectFieldCat.style.display = "flex";
         submitBtn.classList.add("hidden");
         selectFieldCat.classList.add("w-[386.75px]", "rounded-r-lg");
-        selectFieldCountry.style.display = "none";
+        // selectFieldCountry.style.display = "none";
         break;
     }
   });
@@ -271,6 +278,22 @@ inputField.addEventListener("keyup", function (event) {
   }
 });
 
+// For event listener
+function selectedCategoryFunc() {
+  const catArray = [];
+
+  // Get all the buttons within the unordered list
+  const buttons = catUl.getElementsByTagName("button");
+
+  // Iterate through the buttons and store their innerText values in the array
+  for (let i = 0; i < buttons.length; i++) {
+    catArray.push(buttons[i].innerText.trim());
+  }
+  return catArray;
+}
+
+
+
 submitBtn.addEventListener("click", function () {
   document.getElementById("newsItems").innerHTML = "";
   let inputKeyword = document.getElementById("search-dropdown").value;
@@ -325,7 +348,6 @@ mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
 
 // Event Listener for returning to Top Stories
 topStories.addEventListener("click", function () {
-  loading();
   // Call the mainPage function to fetch and display the top stories
   setTimeout(function () {
     mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
