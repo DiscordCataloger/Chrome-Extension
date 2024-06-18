@@ -2,6 +2,7 @@ const dropButton = document.getElementById("dropdown-button");
 const dropMenu = document.getElementById("dropdown");
 const dropButtonCat = document.getElementById("dropdown-button-cat");
 const dropMenuCat = document.getElementById("dropdown-cat");
+const catUl = document.getElementById("catUl");
 // const dropButtonCountry = document.getElementById("dropdown-button-country");
 // const dropMenuCountry = document.getElementById("dropdown-country");
 
@@ -48,42 +49,50 @@ const inputField = document.getElementById("search-dropdown");
 const selectFieldCat = document.getElementById("dropdown-button-cat");
 // const selectFieldCountry = document.getElementById("dropdown-button-country");
 
+
+// Event listener for clicking on the category dropdown button
 dropMenu.style.display = "none";
 dropMenuCat.style.display = "none";
 
-document.addEventListener("click", function (event) {
-  if (!dropMenu.contains(event.target) && !dropButton.contains(event.target))
-    dropMenu.style.display = "none";
-});
-
-dropButton.addEventListener("click", function () {
-  if (dropMenu.style.display === "none") {
-    dropMenu.style.display = "block";
+dropButtonCat.addEventListener("click", function () {
+  if (dropMenuCat.style.display === "block") {
+    dropMenuCat.style.display = "none";
   } else {
-    dropMenu.style.display = "none";
+    dropMenuCat.style.display = "block";
   }
 });
 
+// Event listener for clicking anywhere else on the page
 document.addEventListener("click", function (event) {
+  // Check if the click event target is outside the category dropdown menu
   if (
-    !dropMenuCat.contains(event.target) &&
-    !dropButtonCat.contains(event.target)
-  )
-    dropMenuCat.style.display = "none";
-});
-
-dropButtonCat.addEventListener("click", function () {
-  if (dropMenuCat.style.display === "none") {
-    dropMenuCat.style.display = "block";
-  } else {
+    !dropButtonCat.contains(event.target) &&
+    !dropMenuCat.contains(event.target)
+  ) {
     dropMenuCat.style.display = "none";
   }
 });
 
 const selectSearch = (searchItem, btn, menu) => {
+  // Event listener for clicking on the dropdown button
+  btn.addEventListener("click", function () {
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "block";
+    }
+  });
+
+  // Event listener for clicking anywhere else on the page
+  document.addEventListener("click", function (event) {
+    // Check if the click event target is outside the dropdown menu
+    if (!btn.contains(event.target) && !menu.contains(event.target)) {
+      menu.style.display = "none";
+    }
+  });
+
   searchItem.addEventListener("click", function () {
     btn.innerText = searchItem.innerText;
-    // menu.classList.add("hidden");
     menu.style.display = "none";
     // Create a new SVG element
     const svgElement = document.createElementNS(
@@ -119,19 +128,25 @@ const selectSearch = (searchItem, btn, menu) => {
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
         // selectFieldCountry.style.display = "none";
-        submitBtn.classList.remove("hidden");
+        if (submitBtn.classList.contains("hidden")) {
+          inputField.classList.add("w-[349.4167.px]");
+          submitBtn.classList.remove("hidden");
+        }
         break;
       case "Keywords":
         inputField.style.display = "flex";
         selectFieldCat.style.display = "none";
         // selectFieldCountry.style.display = "none";
-        submitBtn.classList.remove("hidden");
+        if (submitBtn.classList.contains("hidden")) {
+          inputField.classList.add("w-[349.4167.px]");
+          submitBtn.classList.remove("hidden");
+        }
         break;
       case "Categories":
         inputField.style.display = "none";
         selectFieldCat.style.display = "flex";
         submitBtn.classList.add("hidden");
-        // selectFieldCat.classList.add("w-[386.75px]", "rounded-r-lg");
+        selectFieldCat.classList.add("w-[386.75px]", "rounded-r-lg");
         // selectFieldCountry.style.display = "none";
         break;
     }
@@ -318,7 +333,7 @@ const main = async (api, keyword, category) => {
 const submitBtn = document.getElementById("submitBtn");
 
 inputField.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
+  if (event.key === "Enter" && !!inputField.value) {
     // Get the entered keyword
     const keyword = inputField.value;
 
@@ -328,16 +343,31 @@ inputField.addEventListener("keyup", function (event) {
   }
 });
 
+// For event listener
+const catArray = [];
+
+// Get all the buttons within the unordered list
+const buttons = catUl.getElementsByTagName("button");
+
+// Iterate through the buttons and store their innerText values in the array
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", function () {
+    let selectedCategory = buttons[i].innerText.trim();
+    if (selectedCategory !== "Select a category") {
+      let inputKeyword = "";
+      main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", inputKeyword, selectedCategory);
+    }
+  });
+}
+
 submitBtn.addEventListener("click", function () {
-  document.getElementById("newsItems").innerHTML = "";
   let inputKeyword = document.getElementById("search-dropdown").value;
   console.log(inputKeyword);
   console.log(dropButtonCat.innerText);
-  main(
-    "ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M",
-    inputKeyword,
-    dropButtonCat.innerText.trim()
-  );
+  if (!!inputKeyword) {
+    document.getElementById("newsItems").innerHTML = "";
+    main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", inputKeyword);
+  }
   // main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", "tennis", "Sports");
 });
 
@@ -382,11 +412,10 @@ mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
 
 // Event Listener for returning to Top Stories
 topStories.addEventListener("click", function () {
-  loading();
   // Call the mainPage function to fetch and display the top stories
   setTimeout(function () {
     mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
-  }, 100);
+  }, 600);
 });
 
 // Toggle Dark / Light mode
