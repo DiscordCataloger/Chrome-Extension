@@ -268,7 +268,7 @@ const main = async (api, keyword, category) => {
 const submitBtn = document.getElementById("submitBtn");
 
 inputField.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
+  if (event.key === "Enter" && !!inputField.value) {
     // Get the entered keyword
     const keyword = inputField.value;
 
@@ -296,11 +296,13 @@ for (let i = 0; i < buttons.length; i++) {
 }
 
 submitBtn.addEventListener("click", function () {
-  document.getElementById("newsItems").innerHTML = "";
   let inputKeyword = document.getElementById("search-dropdown").value;
   console.log(inputKeyword);
   console.log(dropButtonCat.innerText);
-  main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", inputKeyword);
+  if (!!inputKeyword) {
+    document.getElementById("newsItems").innerHTML = "";
+    main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", inputKeyword);
+  }
   // main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", "tennis", "Sports");
 });
 
@@ -348,7 +350,7 @@ topStories.addEventListener("click", function () {
   // Call the mainPage function to fetch and display the top stories
   setTimeout(function () {
     mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
-  }, 100);
+  }, 600);
 });
 
 // // Assuming the RSS feed URL is stored in a variable called 'rssUrl'
