@@ -49,10 +49,47 @@ const inputField = document.getElementById("search-dropdown");
 const selectFieldCat = document.getElementById("dropdown-button-cat");
 // const selectFieldCountry = document.getElementById("dropdown-button-country");
 
+// Event listener for clicking on the category dropdown button
+dropButtonCat.addEventListener("click", function () {
+  if (dropMenuCat.style.display === "block") {
+    dropMenuCat.style.display = "none";
+  } else {
+    dropMenuCat.style.display = "block";
+  }
+});
+
+// Event listener for clicking anywhere else on the page
+document.addEventListener("click", function (event) {
+  // Check if the click event target is outside the category dropdown menu
+  if (
+    !dropButtonCat.contains(event.target) &&
+    !dropMenuCat.contains(event.target)
+  ) {
+    dropMenuCat.style.display = "none";
+  }
+});
+
 const selectSearch = (searchItem, btn, menu) => {
+  // Event listener for clicking on the dropdown button
+  btn.addEventListener("click", function () {
+    if (menu.style.display === "block") {
+      menu.style.display = "none";
+    } else {
+      menu.style.display = "block";
+    }
+  });
+
+  // Event listener for clicking anywhere else on the page
+  document.addEventListener("click", function (event) {
+    // Check if the click event target is outside the dropdown menu
+    if (!btn.contains(event.target) && !menu.contains(event.target)) {
+      menu.style.display = "none";
+    }
+  });
+
   searchItem.addEventListener("click", function () {
     btn.innerText = searchItem.innerText;
-    menu.classList.add("hidden");
+    menu.style.display = "none";
     // Create a new SVG element
     const svgElement = document.createElementNS(
       "http://www.w3.org/2000/svg",
