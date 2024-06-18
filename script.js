@@ -48,10 +48,43 @@ const inputField = document.getElementById("search-dropdown");
 const selectFieldCat = document.getElementById("dropdown-button-cat");
 // const selectFieldCountry = document.getElementById("dropdown-button-country");
 
+dropMenu.style.display = "none";
+dropMenuCat.style.display = "none";
+
+document.addEventListener("click", function (event) {
+  if (!dropMenu.contains(event.target) && !dropButton.contains(event.target))
+    dropMenu.style.display = "none";
+});
+
+dropButton.addEventListener("click", function () {
+  if (dropMenu.style.display === "none") {
+    dropMenu.style.display = "block";
+  } else {
+    dropMenu.style.display = "none";
+  }
+});
+
+document.addEventListener("click", function (event) {
+  if (
+    !dropMenuCat.contains(event.target) &&
+    !dropButtonCat.contains(event.target)
+  )
+    dropMenuCat.style.display = "none";
+});
+
+dropButtonCat.addEventListener("click", function () {
+  if (dropMenuCat.style.display === "none") {
+    dropMenuCat.style.display = "block";
+  } else {
+    dropMenuCat.style.display = "none";
+  }
+});
+
 const selectSearch = (searchItem, btn, menu) => {
   searchItem.addEventListener("click", function () {
     btn.innerText = searchItem.innerText;
-    menu.classList.add("hidden");
+    // menu.classList.add("hidden");
+    menu.style.display = "none";
     // Create a new SVG element
     const svgElement = document.createElementNS(
       "http://www.w3.org/2000/svg",
