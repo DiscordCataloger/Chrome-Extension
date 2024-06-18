@@ -5,7 +5,12 @@
   "version": "1.0",
   "action": {
     "default_popup": "index.html",
-    "default_icon": { "48": "placeholder.png" }
+
+    "default_icon": "Circle-icons-news.png"
+  },
+  "icons": {
+    "48": "Circle-icons-news-48.png",
+    "128": "Circle-icons-news-128.png"
   },
   "content_scripts": [
     {
