@@ -279,31 +279,28 @@ inputField.addEventListener("keyup", function (event) {
 });
 
 // For event listener
-function selectedCategoryFunc() {
-  const catArray = [];
+const catArray = [];
 
-  // Get all the buttons within the unordered list
-  const buttons = catUl.getElementsByTagName("button");
+// Get all the buttons within the unordered list
+const buttons = catUl.getElementsByTagName("button");
 
-  // Iterate through the buttons and store their innerText values in the array
-  for (let i = 0; i < buttons.length; i++) {
-    catArray.push(buttons[i].innerText.trim());
-  }
-  return catArray;
+// Iterate through the buttons and store their innerText values in the array
+for (let i = 0; i < buttons.length; i++) {
+  buttons[i].addEventListener("click", function () {
+    let selectedCategory = buttons[i].innerText.trim();
+    if (selectedCategory !== "Select a category") {
+      let inputKeyword = "";
+      main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", inputKeyword, selectedCategory);
+    }
+  });
 }
-
-
 
 submitBtn.addEventListener("click", function () {
   document.getElementById("newsItems").innerHTML = "";
   let inputKeyword = document.getElementById("search-dropdown").value;
   console.log(inputKeyword);
   console.log(dropButtonCat.innerText);
-  main(
-    "ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M",
-    inputKeyword,
-    dropButtonCat.innerText.trim()
-  );
+  main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", inputKeyword);
   // main("ZipOLjfXVQ8pmFXgq6kSD6LYFrLnWm9M", "tennis", "Sports");
 });
 
