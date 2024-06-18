@@ -1,1 +1,24 @@
+#dropdown-button-cat {
+  display: none;
+}
 
+#dropdown-button-country {
+  display: none;
+}
+
+@keyframes dropMenu {
+  0% {
+    top: -10px;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+#dropdown,
+#dropdown-cat,
+#dropdown-country {
+  animation: dropMenu 0.3s ease;
+}
