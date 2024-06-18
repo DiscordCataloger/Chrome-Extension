@@ -50,6 +50,9 @@ const selectFieldCat = document.getElementById("dropdown-button-cat");
 // const selectFieldCountry = document.getElementById("dropdown-button-country");
 
 // Event listener for clicking on the category dropdown button
+dropMenu.style.display = "none";
+dropMenuCat.style.display = "none";
+
 dropButtonCat.addEventListener("click", function () {
   if (dropMenuCat.style.display === "block") {
     dropMenuCat.style.display = "none";
