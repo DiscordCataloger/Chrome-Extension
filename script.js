@@ -352,6 +352,7 @@ const buttons = catUl.getElementsByTagName("button");
 // Iterate through the buttons and store their innerText values in the array
 for (let i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener("click", function () {
+    document.getElementById("newsItems").innerHTML = "";
     let selectedCategory = buttons[i].innerText.trim();
     if (selectedCategory !== "Select a category") {
       let inputKeyword = "";
@@ -412,10 +413,9 @@ mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
 
 // Event Listener for returning to Top Stories
 topStories.addEventListener("click", function () {
+  document.getElementById("newsItems").innerHTML = "";
   // Call the mainPage function to fetch and display the top stories
-  setTimeout(function () {
-    mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
-  }, 600);
+  mainPage("oJzK6CGrVq8vSyYgA3PBFHNkCsfsEILJ", "home");
 });
 
 // Toggle Dark / Light mode
